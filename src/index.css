@@ -54,6 +54,12 @@ All colors MUST be HSL.
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Gradient colors for morphing animation */
+    --gradient-color-1: hsl(24 95% 53%);
+    --gradient-color-2: hsl(35 100% 60%);
+    --gradient-color-3: hsl(185 65% 38%);
+    --gradient-color-4: hsl(43 96% 56%);
   }
 
   .dark {
@@ -91,6 +97,12 @@ All colors MUST be HSL.
     
     --shadow-soft: 0 4px 20px -4px hsl(24 95% 58% / 0.2);
     --shadow-elevated: 0 10px 40px -10px hsl(24 95% 58% / 0.3);
+
+    /* Gradient colors for morphing animation - dark mode */
+    --gradient-color-1: hsl(24 95% 58%);
+    --gradient-color-2: hsl(35 100% 65%);
+    --gradient-color-3: hsl(185 60% 42%);
+    --gradient-color-4: hsl(43 96% 62%);
   }
 }
 
@@ -101,5 +113,50 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Morphing gradient animation */
+  .bg-gradient-animate {
+    background: linear-gradient(
+      -45deg,
+      var(--gradient-color-1),
+      var(--gradient-color-2),
+      var(--gradient-color-3),
+      var(--gradient-color-4)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 20s ease infinite;
+    opacity: 0.15;
+  }
+
+  /* Radial gradient for orbs */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* Grain texture */
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .bg-gradient-animate,
+    .animate-float-slow,
+    .animate-float-slower {
+      animation: none !important;
+    }
   }
 }
